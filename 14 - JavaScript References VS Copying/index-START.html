@@ -1,56 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
 
-  <script>
-    // start with strings, numbers and booleans
+  <head>
+    <meta charset="UTF-8">
+    <title>JS Reference VS Copy</title>
+  </head>
 
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+  <body>
 
-    // and we want to make a copy of it.
+    <script>
+      // start with strings, numbers and booleans
+      // let age = 100;
+      // let age2 = age;
+      // console.log(age, age2);
+      // age = 200;
+      // console.log(age, age2);
 
-    // You might think we can just do something like this:
+      // let name = 'Wes';
+      // let name2 = name;
+      // console.log(name, name2)
+      // name = 'wesley'
 
-    // however what happens when we update that array?
+      // Let's say we have an array
+      const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
-    // now here is the problem!
+      // and we want to make a copy of it.
+      const team = players;
 
-    // oh no - we have edited the original array too!
+      console.log(players, team)
+      // You might think we can just do something like this:
+      team[3] = 'Lux';
 
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+      // however what happens when we update that array?
+      console.log(players)
+      console.log(team)
+      // now here is the problem!
 
-    // So, how do we fix this? We take a copy instead!
+      // oh no - we have edited the original array too!
 
-    // one way
+      // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
-    // or create a new array and concat the old one in
+      // So, how do we fix this? We take a copy instead!
 
-    // or use the new ES6 Spread
 
-    // now when we update it, the original one isn't changed
+      // one way
+      const team2 = players.slice();
+      team2[0] = 'Soyeong'
+      console.log(players, team2)
+      // or create a new array and concat the old one in
 
-    // The same thing goes for objects, let's say we have a person object
+      const team3 = [].concat(players)
+      team3[0] = 'HI'
+      console.log(players, team3)
+      // or use the new ES6 Spread
+      const team4 = [...players]
+      team4[0] = 'ES6'
+      console.log(players, team4)
 
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
+      const team5 = Array.from(players)
+      team5[0] = 'from'
+      console.log(players, team5)
+      // now when we update it, the original one isn't changed
 
-    // and think we make a copy:
+      // The same thing goes for objects, let's say we have a person object
 
-    // how do we take a copy instead?
+      // with Objects
+      const person = {
+        name: 'Wes Bos',
+        age: 80
+      };
 
-    // We will hopefully soon see the object ...spread
+      // and think we make a copy:
+      const captain = person;
+      captain.age = 99;
+      // how do we take a copy instead?
+      const cap2 = Object.assign({}, person, { age: 99, number: 1 })
+      console.log(cap2)
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+      // We will hopefully soon see the object ...spread
+      // const cap3 = {...person}
 
-  </script>
+      // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+      const wes = {
+        name: 'Wes',
+        age: 100,
+        social: {
+          twitter: '@abc',
+          facebook: 'weswes'
+        }
+      }
+      console.clear()
 
-</body>
+      const dev = Object.assign({}, wes, { like: 'chicken' }) // one level deep
+      dev.name = 'Soyeong'
+      console.log(wes, dev)
+
+      const dev2 = JSON.parse(JSON.stringify(wes))
+      dev2.social.twitter = '@HAPPYHAPPY'
+
+      console.log(wes.social, dev2.social)
+
+    </script>
+
+  </body>
+
 </html>
